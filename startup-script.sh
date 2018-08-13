@@ -10,6 +10,7 @@ set -e
 sleep 10
 >&2 echo "Finished sleep"
 
-python smilewidgets/manage.py migrate --noinput
+python smilewidgets/manage.py migrate products 0002_productprice
 python smilewidgets/manage.py loaddata 0001_fixtures.json
+python smilewidgets/manage.py migrate --noinput
 exec python smilewidgets/manage.py runserver 0.0.0.0:8000
