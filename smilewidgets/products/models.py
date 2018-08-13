@@ -22,3 +22,11 @@ class GiftCard(models.Model):
     @property
     def formatted_amount(self):
         return '${0:.2f}'.format(self.amount / 100)
+
+
+class ProductPrice(models.Model):
+    product = models.ManyToManyField(Product)
+    price = models.PositiveIntegerField(help_text='Price of product in cents')
+    start_date = models.DateField(help_text='first day price goes is valid')
+    end_date = models.DateField(null=True, help_text='last day when price is valid')
+    sale_price = models.BooleanField(help_text='indicates a sale price (like Black Friday, etc.)')
