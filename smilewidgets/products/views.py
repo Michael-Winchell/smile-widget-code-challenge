@@ -34,12 +34,12 @@ class ProductPriceView(APIView):
             .filter(Q(end_date__gte=date)|Q(end_date=None)).order_by('-sale_price')
 
         if product_prices.filter(sale_price=True).count() > 1 or product_prices.filter(sale_price=False).count() > 1:
+            # TODO send this to a visible logging system
             return Response({'error': 'Invalid Price Overlap exists'}, status=404)
 
         product_price = product_prices.first()
 
         if not product_price:
-            # TODO send this to a visible logging system
             return Response({'error': 'product price not found'}, status=404)
 
         price = (product_price.price - gift_card.amount if gift_card else product_price.price) / 100
